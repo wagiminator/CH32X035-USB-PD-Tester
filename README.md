@@ -17,7 +17,7 @@ USB Power Delivery (USB PD) is a protocol that extends the capabilities of stand
 ## Schematic
 ![USB_PD_Tester_wiring.png](https://raw.githubusercontent.com/wagiminator/CH32X035-USB-PD-Tester/main/documentation/USB_PD_Tester_wiring.png)
 
-# CH32X035 F7P6 32-bit RISC-V USB Microcontroller
+## CH32X035 F7P6 32-bit RISC-V USB Microcontroller
 CH32X035F7P6 is a low-cost microcontroller that utilizes the QingKe 32-bit RISC-V4C core, supporting the RV32IMAC instruction set along with self-extending instructions. This microcontroller comes with a built-in USB PHY, supporting USB2.0 full-speed device functions and a USB PD PHY with source and sink capabilities. It features a programmable protocol I/O controller (PIOC), an operational amplifier (OPA) with programmable gain (PGA), an analog comparator (CMP), a 12-bit analog-to-digital converter (ADC), an 11-channel touch-key controller, 3 groups of USART, I2C, SPI, multiple timers, and various other peripheral resources. The device can operate at clock frequencies of up to 48MHz and is compatible with a supply voltage range of 2.0V to 5.5V. The CH32X035F7P6 includes 48KB of flash, 20KB of SRAM, and an embedded USB bootloader.
 
 ## 78L05 Voltage Regulator
