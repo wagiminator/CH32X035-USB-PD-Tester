@@ -27,6 +27,15 @@ The 78L05 is a simple and inexpensive voltage regulator that can convert input v
 
 # Software
 ## Compiling and Uploading the Firmware (Linux)
+### Installing Toolchain (GCC, Python, PyUSB)
+The GNU Compiler Collection for RISC-V, [Python3](https://www.pythontutorial.net/getting-started/install-python/), and [PyUSB](https://github.com/pyusb/pyusb) must be installed on your system for compiling and flashing. On Linux (Debian-based), all of this can be done with the following commands:
+
+```
+sudo apt install build-essential libnewlib-dev gcc-riscv64-unknown-elf
+sudo apt install python3 python3-pip
+python3 -m pip install pyusb
+```
+
 ### Installing Drivers for the Bootloader
 On Linux you do not need to install a driver. However, by default Linux will not expose enough permission to upload your code with the USB bootloader. In order to fix this, open a terminal and run the following commands:
 
@@ -34,14 +43,6 @@ On Linux you do not need to install a driver. However, by default Linux will not
 echo 'SUBSYSTEM=="usb", ATTR{idVendor}=="4348", ATTR{idProduct}=="55e0", MODE="666"' | sudo tee /etc/udev/rules.d/99-ch55x.rules
 echo 'SUBSYSTEM=="usb", ATTR{idVendor}=="1a86", ATTR{idProduct}=="55e0", MODE="666"' | sudo tee -a /etc/udev/rules.d/99-ch55x.rules
 sudo udevadm
-```
-
-### Installing Python and Libraries for the Flash Tool chprog.py
-In order for this tool to work, [Python3](https://www.pythontutorial.net/getting-started/install-python/) and [PyUSB](https://github.com/pyusb/pyusb) must be installed on your system. On Linux (Debian-based), all of this can be done with the following commands:
-
-```
-sudo apt install python3 python3-pip
-python3 -m pip install pyusb
 ```
 
 ### Entering Bootloader Mode
