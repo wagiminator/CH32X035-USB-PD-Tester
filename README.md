@@ -68,6 +68,7 @@ WCH offers the free but closed-source software [WCHISPTool](https://www.wch.cn/d
 3. Insert the button extensions into the corresponding holes on the top part of the casing. Insert the circuit board and secure it with 4 self-tightening M2x5mm screws.
 4. Now solder the screw terminal onto the circuit board.
 5. Close the casing with the back panel.
+6. Flash the firmware (see above).
 
 ![USB_PD_Tester_pic3.jpg](https://raw.githubusercontent.com/wagiminator/CH32X035-USB-PD-Tester/main/documentation/USB_PD_Tester_pic3.jpg)
 
