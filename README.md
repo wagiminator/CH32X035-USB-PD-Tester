@@ -3,6 +3,8 @@ The USB PD Tester is a monitoring and triggering device designed for USB Power D
 
 The USB PD Tester is built around the inexpensive (30 cents at the time of writing) and user-friendly CH32X035 RISC-V microcontroller, which comes with integrated USB 2.0, USB PD 2.0/3.0, and USB Type-C hardware support.
 
+- Project video (Youtube): https://youtu.be/wqLiRnbcISo
+
 ![USB_PD_Tester_pic1.jpg](https://raw.githubusercontent.com/wagiminator/CH32X035-USB-PD-Tester/main/documentation/USB_PD_Tester_pic1.jpg)
 
 # USB Power Delivery
