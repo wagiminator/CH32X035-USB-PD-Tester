@@ -93,8 +93,8 @@ WCH offers the free but closed-source software [WCHISPTool](https://www.wch.cn/d
 - [ATtiny814 USB PD Adapter](https://github.com/wagiminator/ATtiny814-USB-PD-Adapter)
 - [ATtiny412 USB PD Inverter](https://github.com/wagiminator/ATtiny412-USB-PD-Inverter)
 - [TI Primer on USB PD](https://www.ti.com/lit/wp/slyy109b/slyy109b.pdf)
-- [CH32X035 F7P6 on Aliexpress](aliexpress.com/item/1005006199310724.html)
-- [128x64 OLED on Aliexpress](http://aliexpress.com/wholesale?SearchText=128+64+0.96+oled)
+- [CH32X035 F7P6 on Aliexpress](https://aliexpress.com/item/1005006199310724.html)
+- [128x64 OLED on Aliexpress](https://aliexpress.com/wholesale?SearchText=128+64+0.96+oled)
 
 ![USB_PD_Tester_pic6.jpg](https://raw.githubusercontent.com/wagiminator/CH32X035-USB-PD-Tester/main/documentation/USB_PD_Tester_pic6.jpg)
 
