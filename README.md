@@ -76,7 +76,7 @@ WCH offers the free but closed-source software [WCHISPTool](https://www.wch.cn/d
 
 # Operating Instructions
 1. Connect the USB PD Tester to a USB Type-C PD power supply using a USB-C cable. The available PDOs and their corresponding capabilities are displayed on the OLED.
-2. Utilize the UP and DOWN buttons to choose the desired PDO. A left-angle bracket on the right side serves as the selection indicator. Programmable PDOs, indicated by numbers within square brackets, allow precise adjustments of the output voltage in 50mV steps within the specified range.
+2. Utilize the UP and DOWN buttons to choose the desired PDO. A left-angle bracket on the right side serves as the selection indicator. Programmable PDOs, indicated by numbers within square brackets, allow precise adjustments of the output voltage in 20mV steps within the specified range.
 3. Press the SLCT button to activate the chosen PDO. An asterisk on the left side of the PDO confirms the activation.
 4. The selected voltage is now accessible on the screw terminal for further use.
 

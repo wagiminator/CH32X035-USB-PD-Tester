@@ -33,7 +33,7 @@
 #include <oled_text.h>          // OLED text functions
 #include <usbpd_sink.h>         // USB PD sink functions
 
-// Globalariables
+// Global variables
 uint8_t  select  = 1;           // selected PDO
 uint8_t  active  = 1;           // active PDO
 uint16_t voltage = 5000;        // selected voltage
@@ -139,17 +139,17 @@ int main(void) {
         while(PIN_read(PIN_KEY_SLCT)) {
 
           if(!PIN_read(PIN_KEY_UP)) {
-            setVoltage(voltage + 50);
+            setVoltage(voltage + 20);
             i = keydelay;
             while((i--) && (!PIN_read(PIN_KEY_UP))) DLY_ms(10);
-            keydelay = 5;
+            keydelay = 2;
           }
 
           else if(!PIN_read(PIN_KEY_DOWN)) {
-            setVoltage(voltage - 50);
+            setVoltage(voltage - 20);
             i = keydelay;
             while((i--) && (!PIN_read(PIN_KEY_DOWN))) DLY_ms(10);
-            keydelay = 5;
+            keydelay = 2;
           }
 
           else keydelay = 50;
