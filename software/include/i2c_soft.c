@@ -1,5 +1,5 @@
 // ===================================================================================
-// Software I2C Master Functions for CH32X035/X034/X033                       * v1.0 *
+// Software I2C Master Functions for CH32X035/X034/X033                       * v1.1 *
 // ===================================================================================
 //
 // Simple I2C bitbanging. ACK bit of the slave is ignored. Clock stretching by the 
@@ -13,8 +13,8 @@
 // ===================================================================================
 // I2C Delay
 // ===================================================================================
-#define I2C_DLY_TICKS_H   (((F_CPU *  9) / (I2C_CLKRATE * 25)) - 3)
-#define I2C_DLY_TICKS_L   (((F_CPU * 16) / (I2C_CLKRATE * 25)) - 22)
+#define I2C_DLY_TICKS_H   (((F_CPU *  9) / (I2C_CLKRATE * 25)) - 41)
+#define I2C_DLY_TICKS_L   (((F_CPU * 16) / (I2C_CLKRATE * 25)) - 76)
 
 #if I2C_DLY_TICKS_H >= 1
   #define I2C_DELAY_H()   DLY_ticks(I2C_DLY_TICKS_H)
@@ -102,4 +102,16 @@ uint8_t I2C_read(uint8_t ack) {
   if(ack) I2C_SDA_LOW();                    // pull SDA LOW to acknowledge (ACK)
   I2C_CLOCKOUT();                           // clock out -> slave reads ACK bit
   return data;                              // return the received byte
+}
+
+// Send data buffer via I2C bus and stop
+void I2C_writeBuffer(uint8_t* buf, uint16_t len) {
+  while(len--) I2C_write(*buf++);           // write buffer
+  I2C_stop();                               // stop transmission
+}
+
+// Read data via I2C bus to buffer and stop
+void I2C_readBuffer(uint8_t* buf, uint16_t len) {
+  while(len--) *buf++ = I2C_read(len > 0);
+  I2C_stop();
 }

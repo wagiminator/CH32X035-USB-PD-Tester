@@ -1,6 +1,6 @@
 // ===================================================================================
 // Project:   USB PD Tester for CH32X035
-// Version:   v1.0
+// Version:   v1.1
 // Year:      2024
 // Author:    Stefan Wagner
 // Github:    https://github.com/wagiminator
@@ -30,7 +30,7 @@
 // Libraries, Definitions and Macros
 // ===================================================================================
 #include <config.h>             // user configurations
-#include <oled_text.h>          // OLED text functions
+#include <ssd1306_txt.h>        // OLED text functions
 #include <usbpd_sink.h>         // USB PD sink functions
 
 // Global variables
@@ -44,11 +44,11 @@ uint16_t voltage = 5000;        // selected voltage
 
 // Set selected PDO marker
 void setSelect(uint8_t pdo) {
-  OLED_cursor(20, select - 1); OLED_write(' ');
+  OLED_cursor(120, select - 1); OLED_write(' ');
   if(pdo > PD_getPDONum()) select = 1;
   else if(pdo < 1)         select = PD_getPDONum();
   else                     select = pdo;
-  OLED_cursor(20, select - 1); OLED_write('<');
+  OLED_cursor(120, select - 1); OLED_write('<');
 }
 
 // Set active PDO marker
@@ -63,7 +63,7 @@ void setVoltage(uint16_t v) {
   if     (v <= PD_getPDOMinVoltage(select)) voltage = PD_getPDOMinVoltage(select);
   else if(v >= PD_getPDOMaxVoltage(select)) voltage = PD_getPDOMaxVoltage(select);
   else                                      voltage = v;
-  OLED_cursor(5, 6); OLED_printf(">%6dmV <", voltage);
+  OLED_cursor(30, 6); OLED_printf(">%6dmV <", voltage);
 }
 
 // Print source capabilities
@@ -100,6 +100,7 @@ int main(void) {
 
   // Setup OLED and USB-PD
   OLED_init();
+  OLED_clear();
   OLED_printf("Connecting...");
   if(!PD_connect()) {
     OLED_printf("FAILED");

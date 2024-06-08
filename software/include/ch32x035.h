@@ -1,5 +1,5 @@
 // ===================================================================================
-// Header file for CH32X035/X034/X033                                         * v0.3 *
+// Header file for CH32X035/X034/X033                                         * v0.6 *
 // ===================================================================================
 // This contains a copy of ch32x035.h and core_riscv.h and other misc functions.
 // NOTE: This file includes modifications by Stefan Wagner.
@@ -21,9 +21,12 @@
 #define __MPU_PRESENT             0  /* Other CH32 devices does not provide an MPU */
 #define __Vendor_SysTickConfig    0  /* Set to 1 if different SysTick Config is used */
 
+#ifdef __ASSEMBLER__
+#define HSI_VALUE                 (48000000)  /* Value of the internal oscillator in Hz */
+#else
+
 #define HSI_VALUE                 ((uint32_t)48000000)  /* Value of the internal oscillator in Hz */
 
-#ifndef __ASSEMBLER__             // Things before this can be used in assembly.
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -726,10 +729,16 @@ typedef struct
 #define FLASH_BASE                              (0x08000000) /* FLASH base address in the alias region */
 #define SRAM_BASE                               (0x20000000) /* SRAM base address in the alias region */
 #define PERIPH_BASE                             (0x40000000) /* Peripheral base address in the alias region */
+#define OB_BASE                                 (0x1FFFF800)
+#define PFIC_BASE                               (0xE000E000)
+#define STK_BASE                                (0xE000F000)
 #else
 #define FLASH_BASE                              ((uint32_t)0x08000000) /* FLASH base address in the alias region */
 #define SRAM_BASE                               ((uint32_t)0x20000000) /* SRAM base address in the alias region */
 #define PERIPH_BASE                             ((uint32_t)0x40000000) /* Peripheral base address in the alias region */
+#define OB_BASE                                 ((uint32_t)0x1FFFF800)
+#define PFIC_BASE                               ((uint32_t)0xE000E000)
+#define STK_BASE                                ((uint32_t)0xE000F000)
 #endif
 
 #define APB1PERIPH_BASE                         (PERIPH_BASE)
@@ -773,7 +782,6 @@ typedef struct
 #define PIOC_BASE                               (AHBPERIPH_BASE + 0x6C00)
 #define USBPD_BASE                              (AHBPERIPH_BASE + 0x7000)
 
-#define OB_BASE                                 ((uint32_t)0x1FFFF800)
 #define PIOC_SRAM_BASE                          (SRAM_BASE+0x4000)
 #define PIOC_SFR_BASE                           PIOC_BASE
 
@@ -820,12 +828,9 @@ typedef struct
 #define OB                                      ((OB_TypeDef *)OB_BASE)
 
 /* Core declaration */
-#define PFIC                                    ((PFIC_Type *) 0xE000E000 )
+#define PFIC                                    ((PFIC_Type *)PFIC_BASE)
 #define NVIC                                    PFIC
-#define NVIC_KEY1                               ((uint32_t)0xFA050000)
-#define	NVIC_KEY2	                              ((uint32_t)0xBCAF0000)
-#define	NVIC_KEY3	                              ((uint32_t)0xBEEF0000)
-#define SysTick                                 ((SysTick_Type *) 0xE000F000)
+#define SysTick                                 ((SysTick_Type *)STK_BASE)
 #define STK                                     SysTick
 
 /* PIOC declaration */
@@ -1839,6 +1844,10 @@ typedef struct
 #define FLASH_WRPR3_WRPR3                       ((uint32_t)0x00FF0000) /* Flash memory write protection option bytes */
 #define FLASH_WRPR3_nWRPR3                      ((uint32_t)0xFF000000) /* Flash memory write protection complemented option bytes */
 
+/*******************************  FLASH keys  *********************************/
+#define FLASH_KEY1                              ((uint32_t)0x45670123)
+#define FLASH_KEY2                              ((uint32_t)0xCDEF89AB)
+
 /******************************************************************************/
 /*                General Purpose and Alternate Function I/O                  */
 /******************************************************************************/
@@ -2650,6 +2659,11 @@ typedef struct
 #define PWR_CTLR_PLS_0                          ((uint16_t)0x0020) /* Bit 0 */
 #define PWR_CTLR_PLS_1                          ((uint16_t)0x0040) /* Bit 1 */
 
+#define PWR_CTLR_PLS_2V1                        ((uint16_t)0x0000)
+#define PWR_CTLR_PLS_2V3                        ((uint16_t)0x0020)
+#define PWR_CTLR_PLS_3V0                        ((uint16_t)0x0040)
+#define PWR_CTLR_PLS_4V0                        ((uint16_t)0x0060)
+
 #define PWR_CTLR_LP_REG                         ((uint16_t)0x0200) /* Software configure flash into lower energy mode */
 #define PWR_CTLR_LP                             ((uint16_t)0x0C00) /* Software configure flash Status */
 #define PWR_CTLR_LP_0                           ((uint16_t)0x0400)
@@ -3289,6 +3303,8 @@ typedef struct
 #define PFIC_KEY1                               ((uint32_t)0xFA050000)
 #define PFIC_KEY2                               ((uint32_t)0xBCAF0000)
 #define PFIC_KEY3                               ((uint32_t)0xBEEF0000)
+
+#define NVIC_RESETSYS                           ((uint32_t)0x00000080)
 #define NVIC_KEY1                               ((uint32_t)0xFA050000)
 #define NVIC_KEY2                               ((uint32_t)0xBCAF0000)
 #define NVIC_KEY3                               ((uint32_t)0xBEEF0000)
@@ -3300,6 +3316,13 @@ typedef struct
 #define PFIC_WFITOWFE                           ((uint32_t)0x00000008) /* Treat WFI as WFE */
 #define PFIC_SLEEPDEEP                          ((uint32_t)0x00000004) /* 1:deep sleep; 0:sleep */
 #define PFIC_SLEEPONEXIT                        ((uint32_t)0x00000002) /* 1:sleep after ISR */
+
+#define NVIC_SYSRESET                           ((uint32_t)0x80000000)
+#define NVIC_SETEVENT                           ((uint32_t)0x00000020)
+#define NVIC_SEVONPEND                          ((uint32_t)0x00000010)
+#define NVIC_WFITOWFE                           ((uint32_t)0x00000008)
+#define NVIC_SLEEPDEEP                          ((uint32_t)0x00000004)
+#define NVIC_SLEEPONEXIT                        ((uint32_t)0x00000002)
 
 /******************************************************************************/
 /*                       System Counter (STK / SysTick)                       */
