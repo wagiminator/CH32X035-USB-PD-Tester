@@ -25,19 +25,13 @@ CH32X035F7P6 is a low-cost microcontroller that utilizes the QingKe 32-bit RISC-
 ## 78L05 Voltage Regulator
 The 78L05 is a simple and inexpensive voltage regulator that can convert input voltages up to 30V to an output voltage of 5V with an output current of up to 100mA and a dropout voltage of 1.7V. The 78L05 supplies all elements of the circuit with up to 5V.
 
+## SSD1306 OLED Display Module
+A low-cost SSD1306 4-pin I2C 128x64 pixels 0.96-inch OLED module is used as the display device. Make sure to acquire one with the correct pinout!
+
 ![USB_PD_Tester_pic2.jpg](https://raw.githubusercontent.com/wagiminator/CH32X035-USB-PD-Tester/main/documentation/USB_PD_Tester_pic2.jpg)
 
 # Software
-## Compiling and Uploading the Firmware (Linux)
-### Installing Toolchain (GCC, Python, PyUSB)
-The GNU Compiler Collection for RISC-V, [Python3](https://www.pythontutorial.net/getting-started/install-python/), and [PyUSB](https://github.com/pyusb/pyusb) must be installed on your system for compiling and flashing. On Linux (Debian-based), all of this can be done with the following commands:
-
-```
-sudo apt install build-essential libnewlib-dev gcc-riscv64-unknown-elf
-sudo apt install python3 python3-pip
-python3 -m pip install pyusb
-```
-
+## USB Bootloader
 ### Installing Drivers for the Bootloader
 On Linux you do not need to install a driver. However, by default Linux will not expose enough permission to upload your code with the USB bootloader. In order to fix this, open a terminal and run the following commands:
 
@@ -47,22 +41,40 @@ echo 'SUBSYSTEM=="usb", ATTR{idVendor}=="1a86", ATTR{idProduct}=="55e0", MODE="6
 sudo udevadm
 ```
 
+For Windows you can use the [Zadig Tool](https://zadig.akeo.ie/) to install the correct driver. Here, click "Options" -> "List All Devices" and select the USB module. Then install the libusb-win32 driver. To do this, the board must be connected and the microcontroller must be in bootloader mode.
+
 ### Entering Bootloader Mode
 The bootloader must be started manually for new uploads. To do this, the board must first be disconnected from the USB port. Now press the BOOT button and keep it pressed while reconnecting the board to the USB port of your PC. The chip now starts in bootloader mode, the BOOT button can be released and new firmware can be uploaded via USB within the next couple of seconds.
 
-### Compiling and Uploading
-Open a terminal and navigate to the folder with the makefile. Run the following command to compile and upload:
+## Compiling and Uploading Firmware using the Makefile
+### Linux
+Install the toolchain (GCC compiler, Python3, and PyUSB):
+```
+sudo apt install build-essential libnewlib-dev gcc-riscv64-unknown-elf
+sudo apt install python3 python3-pip
+python3 -m pip install pyusb
+```
+
+Open a terminal and navigate to the folder with the *makefile*. Press the BOOT button and keep it pressed while connecting the board to the USB port of your PC. Run the following command to compile and upload:
 ```
 make flash
 ```
 
 If you want to just upload the pre-compiled binary, run the following command instead:
 ```
-python3 ./tools/chprog.py pd_test.bin
+python3 tools/chprog.py bin/pd_tester.bin
 ```
 
-## Uploading Firmware Binary (Windows)
-WCH offers the free but closed-source software [WCHISPTool](https://www.wch.cn/downloads/WCHISPTool_Setup_exe.html) to upload firmware with Windows via the USB bootloader. Press the BOOT button and keep it pressed while connecting the board to the USB port of your PC. Release the BOOT button, open the pd_test.hex file in WCHISPTool and upload it to the microcontroller.
+### Other Operating Systems
+Follow the instructions on [CNLohr's ch32v003fun page](https://github.com/cnlohr/ch32v003fun/wiki/Installation) to set up the toolchain on your respective operating system (for Windows, use WSL). Also, install [Python3](https://www.pythontutorial.net/getting-started/install-python/) and [pyusb](https://github.com/pyusb/pyusb). Compile and upload with "make flash". Note that I only have Debian-based Linux and have not tested it on other operating systems.
+
+## Compiling and Uploading Firmware using PlatformIO
+- Install [PlatformIO](https://platformio.org) and [platform-ch32v](https://github.com/Community-PIO-CH32V/platform-ch32v). Follow [these instructions](https://pio-ch32v.readthedocs.io/en/latest/installation.html) to do so. Linux/Mac users may also need to install [pyenv](https://realpython.com/intro-to-pyenv).
+- Click on "Open Project" and select the firmware folder with the *platformio.ini* file.
+- Press the BOOT button and keep it pressed while connecting the board to the USB port of your PC. Then click "Upload".
+
+## Uploading pre-compiled Firmware Binary
+WCH offers the free but closed-source software [WCHISPTool](https://www.wch.cn/downloads/WCHISPTool_Setup_exe.html) to upload firmware with Windows via the USB bootloader. Press the BOOT button and keep it pressed while connecting the board to the USB port of your PC. Release the BOOT button, open the *pd_tester.hex* file in the *bin* folder with WCHISPTool and upload it to the microcontroller.
 
 # Building Instructions
 1. Print the casing with your 3D printer.
