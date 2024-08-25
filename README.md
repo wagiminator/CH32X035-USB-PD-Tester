@@ -60,11 +60,6 @@ Open a terminal and navigate to the folder with the *makefile*. Press the BOOT b
 make flash
 ```
 
-If you want to just upload the pre-compiled binary, run the following command instead:
-```
-chprog bin/pd_tester.bin
-```
-
 ### Other Operating Systems
 Follow the instructions on [CNLohr's ch32v003fun page](https://github.com/cnlohr/ch32v003fun/wiki/Installation) to set up the toolchain on your respective operating system (for Windows, use WSL). Also, install [Python3](https://www.pythontutorial.net/getting-started/install-python/) and [chprog](https://pypi.org/project/chprog/). Compile and upload with "make flash". Note that I only have Debian-based Linux and have not tested it on other operating systems.
 
@@ -82,12 +77,13 @@ chprog bin/pd_tester.bin
 ```
 
 # Building Instructions
-1. Print the casing with your 3D printer.
-2. Solder the components onto the circuit board. Remove the plastic part from the pin header of the OLED, trim the pins, and solder the OLED module flush onto the PCB. Do not solder the screw terminal yet.
-3. Insert the button extensions into the corresponding holes on the top part of the casing. Insert the circuit board and secure it with 4 self-tightening M2x5mm screws.
-4. Now solder the screw terminal onto the circuit board.
-5. Close the casing with the back panel.
-6. Flash the firmware (see above).
+1. Take the Gerber files (the *zip* file inside the *hardware* folder) and upload them to a PCB (printed circuit board) manufacturer of your choice (e.g., [JLCPCB](https://jlcpcb.com/)). They will use these files to create the circuit board for your device and send it to you.
+2. Once you have the PCB, you can start soldering the components onto it. Use the BOM (bill of materials) and schematic as a guide to make sure everything is connected correctly. You can find the corresponding files in the *hardware* folder. Remove the plastic part from the pin header of the OLED, trim the pins, and solder the OLED module flush onto the PCB. Do not solder the screw terminal yet.
+3. Print the casing with your 3D printer. You can find the corresponding *stl* files in the *3dprint* folder.
+4. Insert the button extensions into the corresponding holes on the top part of the casing. Insert the circuit board and secure it with 4 self-tightening M2x5mm screws.
+5. Now solder the screw terminal onto the circuit board.
+6. Close the casing with the back panel.
+7. Upload the firmware by following the instructions in the previous section (see above).
 
 ![USB_PD_Tester_pic3.jpg](https://raw.githubusercontent.com/wagiminator/CH32X035-USB-PD-Tester/main/documentation/USB_PD_Tester_pic3.jpg)
 
