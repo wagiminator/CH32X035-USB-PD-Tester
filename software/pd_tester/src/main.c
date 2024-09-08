@@ -1,6 +1,6 @@
 // ===================================================================================
 // Project:   USB PD Tester for CH32X035
-// Version:   v1.1
+// Version:   v1.2
 // Year:      2024
 // Author:    Stefan Wagner
 // Github:    https://github.com/wagiminator
@@ -154,6 +154,8 @@ int main(void) {
           }
 
           else keydelay = 50;
+
+          PD_negotiate();
         }
 
         if(PD_setPDO(select, voltage))
@@ -163,6 +165,7 @@ int main(void) {
       while(!PIN_read(PIN_KEY_SLCT));
     }
 
+    PD_negotiate();
     DLY_ms(10);
   }
 }

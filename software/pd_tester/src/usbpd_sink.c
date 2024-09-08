@@ -1,5 +1,5 @@
 // ===================================================================================
-// USB PD SINK Handler for CH32X035                                           * v1.3 *
+// USB PD SINK Handler for CH32X035                                           * v1.4 *
 // ===================================================================================
 //
 // Reference:               https://github.com/openwch/ch32x035
@@ -31,6 +31,7 @@ void PD_update(void);
 // Negotiate current settings and wait until finished (return 1) or timeout (return 0)
 uint8_t PD_negotiate(void) {
   uint8_t counter = 255;
+  PD_control.LastSetVoltage = 0;
   PD_control.USBPD_READY = 0;
   while((!PD_control.USBPD_READY) && (--counter)) {
     DLY_ms(5);
