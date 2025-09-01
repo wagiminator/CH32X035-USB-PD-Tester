@@ -1,6 +1,6 @@
 // ===================================================================================
 // Project:   USB PD Tester for CH32X035
-// Version:   v1.2
+// Version:   v1.3
 // Year:      2024
 // Author:    Stefan Wagner
 // Github:    https://github.com/wagiminator
@@ -99,6 +99,10 @@ int main(void) {
   uint8_t keydelay;
 
   // Setup OLED and USB-PD
+  #if DISABLE_SWJ
+  RCC->APB2PCENR |= RCC_AFIOEN;        // enable AFIO clock
+  AFIO->PCFR1 |= AFIO_PCFR1_SWJ_CFG_2; // disable SWJ on pins PC18 and PC19
+  #endif
   OLED_init();
   OLED_clear();
   OLED_printf("Connecting...");

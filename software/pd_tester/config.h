@@ -12,5 +12,8 @@
 #define PIN_SDA             PA6       // I2C SDA connected to OLED
 #define PIN_LED             PB1       // pin connected to LED (active low)
 
+// If using PC18 and/or PC19 for OLED, disable SWJ
+#define DISABLE_SWJ         0         // 0: normal SWJ pins, 1: OLED pins
+
 // MCU supply voltage
 #define USB_VDD             0         // 0: 3.3V, 1: 5V
