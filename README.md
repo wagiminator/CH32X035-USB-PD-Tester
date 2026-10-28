@@ -71,6 +71,8 @@ Follow the instructions on [CNLohr's ch32v003fun page](https://github.com/cnlohr
 ## Uploading pre-compiled Firmware Binary
 WCH offers the free but closed-source software [WCHISPTool](https://www.wch.cn/downloads/WCHISPTool_Setup_exe.html) to upload firmware with Windows via the USB bootloader. Press the BOOT button and keep it pressed while connecting the board to the USB port of your PC. Release the BOOT button, open the *pd_tester.hex* file in the *bin* folder with WCHISPTool and upload it to the microcontroller.
 
+You can also use the [web app](https://wagiminator.github.io/apps/chprog/) to upload the *pd_tester.hex* file in the *bin* folder. This only works in Chrome, Edge, or Opera browsers on a desktop computer. The prerequisites mentioned above regarding drivers or udev rules must be met.
+
 If [Python3](https://www.pythontutorial.net/getting-started/install-python/) is installed, you can also use the platform-independent open-source command-line tool [chprog](https://pypi.org/project/chprog/) for uploading:
 ```
 chprog bin/pd_tester.bin
@@ -88,10 +90,27 @@ chprog bin/pd_tester.bin
 ![USB_PD_Tester_pic3.jpg](https://raw.githubusercontent.com/wagiminator/CH32X035-USB-PD-Tester/main/documentation/USB_PD_Tester_pic3.jpg)
 
 # Operating Instructions
+## Software Version v1 (PD 3.0 Support incl. PDO and PPS)
 1. Connect the USB PD Tester to a USB Type-C PD power supply using a USB-C cable. The available PDOs and their corresponding capabilities are displayed on the OLED.
 2. Utilize the UP and DOWN buttons to choose the desired PDO. A left-angle bracket on the right side serves as the selection indicator. Programmable PDOs, indicated by numbers within square brackets, allow precise adjustments of the output voltage in 20mV steps within the specified range.
 3. Press the SLCT button to activate the chosen PDO. An asterisk on the left side of the PDO confirms the activation.
 4. The selected voltage is now accessible on the screw terminal for further use.
+
+## Software Version v2 (PD 3.1 Support incl. EPR and AVS)
+1. UP/DOWN: select PDO (list scrolls if there are more than 7 PDOs).
+2. SLCT on fixed/variable/battery PDO: request it.
+3. SLCT on PPS/AVS PDO: open adjust screen, set voltage with UP/DOWN (hold for fast steps), apply with SLCT.
+4. Display shows:
+```
+Each line shows one PDO:   *nnT# <description>      <
+                           |  || |                  +-- cursor
+                           |  || +-- voltage/current or range/current or power
+                           |  |+-- '#': locked (above PD_VOLTAGE_LIMIT / needs EPR)
+                           |  +-- type: F=fixed V=variable B=battery P=PPS A=AVS
+                           +-- '*': active PDO, nn: object position (8..13 = EPR)
+The bottom line shows the PD revision, the EPR state and the voltage limit, or
+the result of the last action.
+```
 
 ![USB_PD_Tester_pic4.jpg](https://raw.githubusercontent.com/wagiminator/CH32X035-USB-PD-Tester/main/documentation/USB_PD_Tester_pic4.jpg)
 ![USB_PD_Tester_pic5.jpg](https://raw.githubusercontent.com/wagiminator/CH32X035-USB-PD-Tester/main/documentation/USB_PD_Tester_pic5.jpg)
@@ -100,6 +119,7 @@ chprog bin/pd_tester.bin
 - [EasyEDA Design Files](https://oshwlab.com/wagiminator)
 - [MCU Templates](https://github.com/wagiminator/MCU-Templates)
 - [MCU Flash Tools](https://github.com/wagiminator/MCU-Flash-Tools)
+- [MCU Flasher Web App](https://wagiminator.github.io/apps/chprog/)
 - [CH32X035 Datasheets](http://www.wch-ic.com/products/CH32X035.html)
 - [SSD1306 Datasheet](https://cdn-shop.adafruit.com/datasheets/SSD1306.pdf)
 - [78L05 Datasheet](https://datasheet.lcsc.com/lcsc/2209271730_HX-hengjiaxing-78L05_C5181466.pdf)
